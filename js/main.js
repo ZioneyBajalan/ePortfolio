@@ -71,32 +71,3 @@ document.querySelectorAll('nav a').forEach(anchor => {
         section.scrollIntoView({ behavior: 'smooth' });
     });
 });
-
-// Project modal functionality
-document.querySelectorAll('.project-card').forEach(card => {
-    card.addEventListener('click', function() {
-        // Create modal
-        const modal = document.createElement('div');
-        modal.className = 'modal';
-        modal.innerHTML = `
-            <div class="modal-content">
-                <span class="close">&times;</span>
-                ${this.innerHTML}
-            </div>
-        `;
-        
-        document.body.appendChild(modal);
-        
-        // Close modal functionality
-        modal.querySelector('.close').addEventListener('click', () => {
-            modal.remove();
-        });
-        
-        // Close modal when clicking outside
-        modal.addEventListener('click', (e) => {
-            if (e.target === modal) {
-                modal.remove();
-            }
-        });
-    });
-});
