@@ -1,10 +1,9 @@
 # ePortfolio
-
+Hi! I'm Zioney Jayce A. Bajalan, a CS Student that created:
 A personal portfolio website showcasing my projects and skills, built with HTML5, CSS3, and JavaScript.
 
 ## Features
 
-- Responsive design that works on desktop and mobile
 - Interactive navigation with smooth scrolling
 - Project showcase with modal windows
 - Contact form with validation
@@ -48,9 +47,7 @@ ePortfolio/
 │   └── styles.css
 ├── js/
 │   └── main.js
-├── images/
-│   ├── profile-placeholder.jpg
-│   └── project1.jpg
+├── images
 └── README.md
 ```
 
