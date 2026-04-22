@@ -1,0 +1,183 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-forest-950 text-forest-50 font-sans overflow-x-hidden;
+  }
+
+  h1, h2, h3 {
+    @apply font-sans;
+  }
+
+  h1 {
+    @apply text-4xl md:text-5xl font-light tracking-tight mb-4;
+  }
+
+  h2 {
+    @apply text-3xl md:text-4xl font-light tracking-tight mb-4;
+  }
+
+  h3 {
+    @apply text-xl md:text-2xl font-medium mb-2;
+  }
+
+  p {
+    @apply text-forest-200 leading-relaxed;
+  }
+}
+
+/* Animated forest background with parallax */
+#forest-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -2;
+  background: linear-gradient(180deg, #0f1810 0%, #1a3a2a 20%, #243d2e 40%, #2d5240 100%);
+  animation: foliageShift 20s ease-in-out infinite;
+}
+
+/* Sunbeam overlays */
+#forest-bg::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: 
+    linear-gradient(135deg, transparent 0%, rgba(255, 220, 100, 0.08) 25%, transparent 50%),
+    linear-gradient(225deg, transparent 0%, rgba(255, 220, 100, 0.08) 25%, transparent 50%);
+  animation: sunbeamShift 12s ease-in-out infinite;
+}
+
+/* Forest depth overlays */
+#forest-bg::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: 
+    radial-gradient(circle at 20% 30%, rgba(107, 168, 118, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 80% 70%, rgba(90, 157, 102, 0.15) 0%, transparent 50%),
+    radial-gradient(circle at 50% 50%, rgba(107, 168, 118, 0.08) 0%, transparent 70%);
+  z-index: 0;
+  pointer-events: none;
+}
+
+@keyframes sunbeamShift {
+  0%, 100% {
+    background-position: 0% 0%, 100% 0%;
+    opacity: 1;
+  }
+  50% {
+    background-position: 100% 0%, 0% 0%;
+    opacity: 0.8;
+  }
+}
+
+@keyframes foliageShift {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(5px);
+  }
+}
+
+/* Glassmorphic cards */
+@layer components {
+  .glass-card {
+    @apply relative backdrop-blur-md bg-forest-50/10 border border-forest-50/15 rounded-2xl shadow-xl overflow-hidden;
+  }
+
+  .glass-card::before {
+    @apply absolute inset-0 bg-gradient-to-br from-forest-50/5 to-transparent pointer-events-none;
+    content: '';
+  }
+
+  .glass-card > * {
+    @apply relative z-10;
+  }
+
+  /* Parallax card effect */
+  .parallax-card {
+    @apply glass-card transition-transform duration-500 hover:translate-y-[-4px];
+  }
+
+  /* Content wrapper with proper z-index */
+  .content-wrapper {
+    @apply relative z-10;
+  }
+
+  /* Vine decorations */
+  .vine-tl {
+    position: absolute;
+    top: -20px;
+    left: -20px;
+    width: 120px;
+    height: 120px;
+    opacity: 0.6;
+    z-index: 5;
+  }
+
+  .vine-br {
+    position: absolute;
+    bottom: -20px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    opacity: 0.6;
+    z-index: 5;
+    transform: rotate(180deg);
+  }
+
+  .vine-tr {
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 120px;
+    height: 120px;
+    opacity: 0.6;
+    z-index: 5;
+    transform: scaleX(-1);
+  }
+
+  .vine-bl {
+    position: absolute;
+    bottom: -20px;
+    left: -20px;
+    width: 120px;
+    height: 120px;
+    opacity: 0.6;
+    z-index: 5;
+    transform: scaleX(-1) scaleY(-1);
+  }
+
+  /* Smooth button styles */
+  .btn-forest {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-forest-500 to-forest-600 text-forest-50 rounded-lg font-medium transition-all duration-300 hover:shadow-lg hover:translate-y-[-2px] active:translate-y-0;
+  }
+
+  .btn-forest-secondary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-forest-50/10 text-forest-100 border border-forest-50/20 rounded-lg font-medium transition-all duration-300 hover:bg-forest-50/20 hover:border-forest-50/40 hover:translate-y-[-2px];
+  }
+}
+
+/* Utility for depth effect */
+.depth-1 {
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.depth-2 {
+  box-shadow: 0 20px 50px rgba(107, 168, 118, 0.2);
+}
+
+.depth-3 {
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.4);
+}
