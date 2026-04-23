@@ -1,4 +1,4 @@
-// Parallax effect for hero section
+// Smooth parallax effect for hero section
 window.addEventListener('mousemove', function(e) {
     const heroContent = document.querySelector('.hero-content');
     if (heroContent && window.pageYOffset < window.innerHeight) {
@@ -6,6 +6,39 @@ window.addEventListener('mousemove', function(e) {
         const mouseY = (e.clientY / window.innerHeight - 0.5) * 20;
         heroContent.style.transform = `perspective(1000px) rotateX(${mouseY * 0.5}deg) rotateY(${mouseX * 0.5}deg)`;
     }
+});
+
+// Navigation highlight based on scroll position
+window.addEventListener('scroll', () => {
+    const sections = document.querySelectorAll('main > section');
+    const navLinks = document.querySelectorAll('.nav-link');
+    
+    let current = 'home';
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (scrollY >= sectionTop - 300) {
+            current = section.getAttribute('id') || 'home';
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('active');
+        }
+    });
+}, { passive: true });
+
+// Smooth scroll for navigation links
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function(e) {
+        e.preventDefault();
+        const targetId = this.getAttribute('href').substring(1);
+        const target = document.getElementById(targetId);
+        if (target) {
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    });
 });
 
 // Intersection Observer for fade-in animations
@@ -23,37 +56,64 @@ const observer = new IntersectionObserver(function(entries) {
     });
 }, observerOptions);
 
-// Add fade-in animation to elements on page load
+// Add fade-in animation on load
 document.addEventListener('DOMContentLoaded', function() {
-    const elementsToAnimate = document.querySelectorAll('.about-grid, .project-grid, .contact-grid, .section-title, .about-text, .stats-container, .project-card, .skill, .stat-card, .contact-card, .contact-info');
+    const elementsToAnimate = document.querySelectorAll('.content-card, .project-card, .section-title, .skill, .stat-card, .contact-card, .btn');
     
-    elementsToAnimate.forEach(el => {
+    elementsToAnimate.forEach((el, index) => {
         el.style.opacity = '0';
         el.style.transform = 'translateY(20px)';
-        el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        el.style.transition = `opacity 0.6s ease-out ${index * 0.1}s, transform 0.6s ease-out ${index * 0.1}s`;
         observer.observe(el);
     });
-});\n\n// Form validation
-document.getElementById('contact-form').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const name = document.getElementById('name').value;
-    const email = document.getElementById('email').value;
-    const message = document.getElementById('message').value;
-    
-    if (!validateForm(name, email, message)) {
-        return;
-    }
-    
-    // If validation passes, submit the form
-    this.submit();
 });
+
+// Form validation and handling
+const contactForm = document.getElementById('contact-form');
+if (contactForm) {
+    contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const message = document.getElementById('message').value.trim();
+        
+        if (validateForm(name, email, message)) {
+            // Show success message
+            const successMsg = document.createElement('div');
+            successMsg.className = 'success-message';
+            successMsg.textContent = 'Message sent successfully! Thank you for reaching out.';
+            successMsg.style.cssText = `
+                background: rgba(107, 168, 118, 0.3);
+                border: 1px solid rgba(107, 168, 118, 0.6);
+                color: #9ecb8e;
+                padding: 15px;
+                border-radius: 6px;
+                margin-bottom: 20px;
+                animation: fadeInUp 0.4s ease-out;
+            `;
+            
+            contactForm.parentNode.insertBefore(successMsg, contactForm);
+            
+            // Clear form
+            contactForm.reset();
+            
+            // Remove success message after 5 seconds
+            setTimeout(() => {
+                successMsg.remove();
+            }, 5000);
+        }
+    });
+}
 
 function validateForm(name, email, message) {
     let isValid = true;
     
+    // Clear existing errors
+    document.querySelectorAll('.error-message').forEach(el => el.remove());
+    
     // Name validation
-    if (name.trim().length < 2) {
+    if (name.length < 2) {
         showError('name', 'Name must be at least 2 characters long');
         isValid = false;
     }
@@ -65,7 +125,7 @@ function validateForm(name, email, message) {
     }
     
     // Message validation
-    if (message.trim().length < 10) {
+    if (message.length < 10) {
         showError('message', 'Message must be at least 10 characters long');
         isValid = false;
     }
@@ -78,25 +138,36 @@ function validateEmail(email) {
     return re.test(email);
 }
 
-function showError(fieldId, message) {
+function showError(fieldId, errorMsg) {
     const field = document.getElementById(fieldId);
     const errorDiv = document.createElement('div');
     errorDiv.className = 'error-message';
-    errorDiv.textContent = message;
-    
-    // Remove any existing error messages
-    const existingError = field.parentNode.querySelector('.error-message');
-    if (existingError) {
-        existingError.remove();
-    }
+    errorDiv.textContent = errorMsg;
     
     field.parentNode.appendChild(errorDiv);
     
-    // Remove error message after 3 seconds
-    setTimeout(() => {
+    // Highlight input field
+    field.style.borderColor = 'rgba(255, 107, 107, 0.6)';
+    field.style.backgroundColor = 'rgba(255, 107, 107, 0.08)';
+    
+    field.addEventListener('focus', () => {
+        field.style.borderColor = 'rgba(107, 168, 118, 0.6)';
+        field.style.backgroundColor = 'rgba(255, 255, 255, 0.08)';
         errorDiv.remove();
-    }, 3000);
+    });
+    
+    // Auto-remove error message after 5 seconds
+    setTimeout(() => {
+        if (errorDiv.parentNode) {
+            errorDiv.remove();
+        }
+    }, 5000);
 }
+
+// Add smooth transition when page loads
+window.addEventListener('load', () => {
+    document.body.style.opacity = '1';
+});
 
 // Smooth scrolling for navigation links
 document.querySelectorAll('nav a').forEach(anchor => {
