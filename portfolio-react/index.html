@@ -1,15 +1,152 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Zioney Jayce A. Bajalan - Portfolio</title>
-    <!-- Font Awesome for icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zioney Jayce A. Bajalan - Portfolio</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+  <!-- Navigation -->
+  <nav>
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+      <div class="nav-brand">ePortfolio</div>
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header id="home">
+    <div class="hero-content">
+      <h1>Zioney Jayce A. Bajalan</h1>
+      <p class="subtitle">Full-Stack Developer & Creative Problem Solver</p>
+      <div class="social-buttons">
+        <a href="#projects" class="btn btn-primary"><i class="fas fa-code"></i> View My Work</a>
+        <a href="#contact" class="btn btn-secondary"><i class="fas fa-envelope"></i> Get In Touch</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2>About Me</h2>
+    <div class="about-grid">
+      <div class="card">
+        <h3>Background</h3>
+        <p>I'm a passionate developer with expertise in building responsive web applications using modern technologies. I love turning ideas into elegant, functional solutions.</p>
+      </div>
+      <div class="card">
+        <h3>Skills</h3>
+        <div class="skills-grid">
+          <span class="skill-badge">JavaScript</span>
+          <span class="skill-badge">HTML/CSS</span>
+          <span class="skill-badge">React</span>
+          <span class="skill-badge">Node.js</span>
+          <span class="skill-badge">PHP</span>
+          <span class="skill-badge">MySQL</span>
+          <span class="skill-badge">Git</span>
+          <span class="skill-badge">Vite</span>
+        </div>
+      </div>
+      <div class="card">
+        <h3>Philosophy</h3>
+        <p>I believe in writing clean, efficient code and creating user-friendly interfaces. Performance and accessibility are always top priorities.</p>
+      </div>
+    </div>
+    <div class="stats">
+      <div class="stat-card card">
+        <div class="stat-number">50+</div>
+        <div class="stat-label">Projects Completed</div>
+      </div>
+      <div class="stat-card card">
+        <div class="stat-number">3+</div>
+        <div class="stat-label">Years Experience</div>
+      </div>
+      <div class="stat-card card">
+        <div class="stat-number">100%</div>
+        <div class="stat-label">Client Satisfaction</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2>Featured Projects</h2>
+    <div class="projects-grid">
+      <div class="card project-card">
+        <img src="/project1.jpg" alt="AgroFair" class="project-image" onerror="this.src='/placeholder.png'">
+        <h3>AgroFair</h3>
+        <p>A platform connecting farmers directly with buyers, reducing intermediaries and ensuring fair prices.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">React</span>
+          <span class="tech-tag">Node.js</span>
+          <span class="tech-tag">MongoDB</span>
+        </div>
+        <a href="#" class="btn btn-secondary" style="margin-top: 1rem;"><i class="fas fa-github"></i> View on GitHub</a>
+      </div>
+
+      <div class="card project-card">
+        <img src="/project2.jpg" alt="Tetris Assembly" class="project-image" onerror="this.src='/placeholder.png'">
+        <h3>Tetris in Assembly</h3>
+        <p>Classic Tetris game implementation in x86 Assembly, demonstrating low-level programming skills.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">Assembly</span>
+          <span class="tech-tag">x86</span>
+          <span class="tech-tag">Game Dev</span>
+        </div>
+        <a href="#" class="btn btn-secondary" style="margin-top: 1rem;"><i class="fas fa-github"></i> View on GitHub</a>
+      </div>
+
+      <div class="card project-card">
+        <img src="/project3.jpg" alt="BantAI" class="project-image" onerror="this.src='/placeholder.png'">
+        <h3>BantAI</h3>
+        <p>AI-powered chatbot for customer support, utilizing natural language processing and machine learning.</p>
+        <div class="tech-tags">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">TensorFlow</span>
+          <span class="tech-tag">REST API</span>
+        </div>
+        <a href="#" class="btn btn-secondary" style="margin-top: 1rem;"><i class="fas fa-github"></i> View on GitHub</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact">
+    <h2>Get In Touch</h2>
+    <div class="contact-grid">
+      <div class="card">
+        <h3><i class="fas fa-envelope"></i> Email</h3>
+        <p><a href="mailto:your.email@example.com" style="color: #6ba876; text-decoration: none;">your.email@example.com</a></p>
+      </div>
+      <div class="card">
+        <h3><i class="fas fa-phone"></i> Phone</h3>
+        <p><a href="tel:+1234567890" style="color: #6ba876; text-decoration: none;">+1 (234) 567-890</a></p>
+      </div>
+      <div class="card">
+        <h3><i class="fas fa-github"></i> GitHub</h3>
+        <p><a href="https://github.com" target="_blank" style="color: #6ba876; text-decoration: none;">github.com/yourprofile</a></p>
+      </div>
+    </div>
+    <form action="https://formspree.io/f/mrbgnrzv" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required>
+      <input type="email" name="email" placeholder="Your Email" required>
+      <textarea name="message" placeholder="Your Message" required></textarea>
+      <button type="submit" class="btn btn-primary" style="width: 100%;">Send Message</button>
+    </form>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2024 Zioney Jayce A. Bajalan. All rights reserved. <i class="fas fa-heart" style="color: #6ba876;"></i></p>
+  </footer>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
 </html>
