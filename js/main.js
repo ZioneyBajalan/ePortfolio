@@ -1,12 +1,4 @@
-// Smooth parallax effect for hero section
-window.addEventListener('mousemove', function(e) {
-    const heroContent = document.querySelector('.hero-content');
-    if (heroContent && window.pageYOffset < window.innerHeight) {
-        const mouseX = (e.clientX / window.innerWidth - 0.5) * 20;
-        const mouseY = (e.clientY / window.innerHeight - 0.5) * 20;
-        heroContent.style.transform = `perspective(1000px) rotateX(${mouseY * 0.5}deg) rotateY(${mouseX * 0.5}deg)`;
-    }
-});
+// No parallax effect - hero section stays static
 
 // Navigation highlight based on scroll position
 window.addEventListener('scroll', () => {
