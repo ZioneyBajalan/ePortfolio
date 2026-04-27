@@ -1,25 +1,44 @@
 // No parallax effect - hero section stays static
 
-// Navigation highlight based on scroll position
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('main > section');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
+// Throttle function for better scroll performance
+function throttle(func, delay) {
+    let lastCall = 0;
+    return function(...args) {
+        const now = Date.now();
+        if (now - lastCall >= delay) {
+            lastCall = now;
+            func.apply(this, args);
+        }
+    };
+}
+
+// Cache DOM elements
+let sections = [];
+let navLinks = [];
+
+// Initialize caches on page load
+document.addEventListener('DOMContentLoaded', function() {
+    sections = Array.from(document.querySelectorAll('main > section'));
+    navLinks = Array.from(document.querySelectorAll('.nav-link'));
+});
+
+// Optimized navigation highlight based on scroll position
+const updateActiveNav = throttle(() => {
     let current = 'home';
-    sections.forEach(section => {
+    
+    for (const section of sections) {
         const sectionTop = section.offsetTop;
         if (scrollY >= sectionTop - 300) {
             current = section.getAttribute('id') || 'home';
         }
-    });
+    }
 
     navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === '#' + current) {
-            link.classList.add('active');
-        }
+        link.classList.toggle('active', link.getAttribute('href') === '#' + current);
     });
-}, { passive: true });
+}, 100); // Update at most every 100ms
+
+window.addEventListener('scroll', updateActiveNav, { passive: true });
 
 // Smooth scroll for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -44,19 +63,24 @@ const observer = new IntersectionObserver(function(entries) {
         if (entry.isIntersecting) {
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
+            // Stop observing once animation is done
+            observer.unobserve(entry.target);
         }
     });
 }, observerOptions);
 
-// Add fade-in animation on load
+// Add fade-in animation on load with efficient scheduling
 document.addEventListener('DOMContentLoaded', function() {
     const elementsToAnimate = document.querySelectorAll('.content-card, .project-card, .section-title, .skill, .stat-card, .contact-card, .btn');
     
-    elementsToAnimate.forEach((el, index) => {
-        el.style.opacity = '0';
-        el.style.transform = 'translateY(20px)';
-        el.style.transition = `opacity 0.6s ease-out ${index * 0.1}s, transform 0.6s ease-out ${index * 0.1}s`;
-        observer.observe(el);
+    // Use requestAnimationFrame for efficient batch DOM updates
+    requestAnimationFrame(() => {
+        elementsToAnimate.forEach((el, index) => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = `opacity 0.6s ease-out ${index * 0.05}s, transform 0.6s ease-out ${index * 0.05}s`;
+            observer.observe(el);
+        });
     });
 });
 
