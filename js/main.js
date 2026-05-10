@@ -97,6 +97,103 @@ document.addEventListener('DOMContentLoaded', () => {
       field.style.backgroundColor = '';
     }, { once: true });
   }
+
+  // Initialize procedural starfield canvas
+  (function () {
+    const STARFIELD_CONFIG = {
+      maxStars: 300,
+      minStars: 60,
+      densityFactor: 90000, // higher = fewer stars
+      fps: 30,
+      twinkleSpeedMin: 0.00035,
+      twinkleSpeedMax: 0.0010,
+      radiusMin: 0.35,
+      radiusMax: 1.4,
+      colorChance: 0.06,
+      driftMax: 0.6
+    };
+
+    function initStarfield() {
+      if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const canvas = document.getElementById('starfield-canvas');
+      if (!canvas) return;
+      const ctx = canvas.getContext('2d');
+      let dpr = Math.max(1, window.devicePixelRatio || 1);
+      let width = 0, height = 0;
+      let stars = [];
+      let running = true;
+
+      function makeStars() {
+        stars = [];
+        const area = width * height;
+        const count = Math.max(STARFIELD_CONFIG.minStars, Math.min(STARFIELD_CONFIG.maxStars, Math.round(area / STARFIELD_CONFIG.densityFactor)));
+        for (let i = 0; i < count; i++) {
+          const r = STARFIELD_CONFIG.radiusMin + Math.random() * (STARFIELD_CONFIG.radiusMax - STARFIELD_CONFIG.radiusMin);
+          stars.push({
+            x: Math.random() * width,
+            y: Math.random() * height,
+            r,
+            baseAlpha: 0.25 + Math.random() * 0.6,
+            twinkleSpeed: STARFIELD_CONFIG.twinkleSpeedMin + Math.random() * (STARFIELD_CONFIG.twinkleSpeedMax - STARFIELD_CONFIG.twinkleSpeedMin),
+            phase: Math.random() * Math.PI * 2,
+            driftAmp: Math.random() * STARFIELD_CONFIG.driftMax,
+            color: Math.random() < STARFIELD_CONFIG.colorChance ? [170, 200, 255] : [255, 255, 255]
+          });
+        }
+      }
+
+      function resize() {
+        const rect = canvas.getBoundingClientRect();
+        width = Math.max(1, Math.floor(rect.width));
+        height = Math.max(1, Math.floor(rect.height));
+        canvas.width = Math.floor(width * dpr);
+        canvas.height = Math.floor(height * dpr);
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        makeStars();
+      }
+
+      let lastTime = 0;
+      const FPS_INTERVAL = 1000 / STARFIELD_CONFIG.fps;
+
+      function draw(now) {
+        requestAnimationFrame(draw);
+        if (!running) return;
+        if (!lastTime) lastTime = now;
+        const elapsed = now - lastTime;
+        if (elapsed < FPS_INTERVAL) return;
+        lastTime = now;
+        ctx.clearRect(0, 0, width, height);
+        for (const s of stars) {
+          const tw = (Math.sin(now * s.twinkleSpeed + s.phase) * 0.5 + 0.5);
+          const alpha = Math.max(0, Math.min(1, s.baseAlpha * (0.7 + tw * 0.8)));
+          const dx = Math.sin(now * 0.00008 + s.phase) * s.driftAmp;
+          ctx.beginPath();
+          ctx.fillStyle = `rgba(${s.color[0]},${s.color[1]},${s.color[2]},${alpha})`;
+          ctx.arc(s.x + dx, s.y, s.r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+
+      // pause when hidden to save CPU
+      document.addEventListener('visibilitychange', () => {
+        running = !document.hidden;
+        if (running) { lastTime = performance.now(); requestAnimationFrame(draw); }
+      });
+
+      window.addEventListener('resize', throttle(resize, 200));
+      resize();
+      requestAnimationFrame(draw);
+
+      // expose a quick runtime adjuster for tweaking from console
+      window.adjustStarfield = function (cfg) {
+        Object.assign(STARFIELD_CONFIG, cfg || {});
+        resize();
+      };
+    }
+
+    // start starfield after DOM ready
+    initStarfield();
+  })();
 });
 
 // Make page visible after load

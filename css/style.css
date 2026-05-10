@@ -1,6 +1,6 @@
 /* Space-themed variables and starfield background */
 :root {
-    --bg-primary: #030114;
+    --bg-primary: #000000;
     --bg-deep: #07102a;
     --bg-accent: #0b1630;
     --text-primary: #e6f7ff;
@@ -32,39 +32,32 @@ body {
     font-family: 'Inter', 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
     line-height: 1.6;
     color: var(--text-primary);
-    background: radial-gradient(ellipse at bottom, #001126 0%, var(--bg-primary) 60%);
+    /* fallback image used when canvas is not available or JS is disabled */
+    background: var(--bg-primary) url('../assets/starfield.svg') no-repeat center/cover;
     overflow-x: hidden;
     position: relative;
     min-height: 100vh;
 }
 
-/* Starfield layers (pure CSS) */
-body::before {
-    content: "";
+/* Canvas-based starfield will be drawn into #starfield-canvas (see js/main.js) */
+#starfield-canvas {
     position: fixed;
     inset: 0;
-    /* fewer, softer stars to avoid moiré/grid artifacts on some displays */
-    background-image:
-        radial-gradient(#ffffff 0.8px, rgba(255,255,255,0) 0.8px),
-        radial-gradient(#ffffff 1.2px, rgba(255,255,255,0) 1.2px),
-        radial-gradient(rgba(123,61,255,0.12) 0px, rgba(123,61,255,0) 60%);
-    background-size: 6px 6px, 10px 10px, cover;
-    background-position: 0 0, 40% 40%, center;
-    opacity: var(--star-opacity);
+    width: 100%;
+    height: 100%;
     z-index: -3;
     pointer-events: none;
-    animation: starsMove 120s linear infinite;
-    mix-blend-mode: screen;
-    image-rendering: auto;
+    display: block;
 }
 
+/* subtle nebula overlay kept as a soft gradient */
 body::after {
     content: "";
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse at 20% 10%, rgba(123,61,255,0.12), transparent 18%),
-      radial-gradient(ellipse at 80% 80%, rgba(106,227,255,0.06), transparent 18%);
+      radial-gradient(ellipse at 20% 10%, rgba(123,61,255,0.08), transparent 18%),
+      radial-gradient(ellipse at 80% 80%, rgba(106,227,255,0.04), transparent 18%);
     z-index: -2;
     pointer-events: none;
     mix-blend-mode: screen;
