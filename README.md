@@ -1,71 +1,51 @@
-# ePortfolio
-Hi! I'm Zioney Jayce A. Bajalan, a CS Student that created:
-A personal portfolio website showcasing my projects and skills, built with HTML5, CSS3, and JavaScript.
+# Zioney Jayce — Developer Portfolio
 
-## Features
+A concise, fast-loading static portfolio highlighting AI/ML and full‑stack projects. This repository contains a single-page static site built with semantic HTML, modern CSS, and a small amount of JavaScript for interactivity.
 
-- Interactive navigation with smooth scrolling
-- Project showcase with modal windows
-- Contact form with validation
-- CSS animations and transitions
-- Modern and clean user interface
+## Highlights
+- Fast, accessible single-page portfolio (Hero, About, Projects, Contact)
+- Minimal JavaScript: smooth navigation, animated reveal, and client-side form validation
+- Clean, responsive UI optimized for performance and deployment to GitHub Pages or Vercel
 
-## Technologies Used
+## Tech
+- HTML5
+- CSS3 (modern layout + effects)
+- JavaScript (vanilla, minimal)
+- Vite (optional, for local dev / production build)
 
-- HTML5 (Semantic tags for better structure)
-- CSS3 (Custom styling and animations)
-- JavaScript (Form validation and interactivity)
-- Formspree (Contact form handling)
-- GitHub Pages (Hosting)
-
-## Setup Instructions
-
-1. Clone this repository:
+## Quick start
+1. Clone the repo:
 ```bash
-git clone https://github.com/your-username/ePortfolio.git
-```
-
-2. Navigate to the project directory:
-```bash
+git clone https://github.com/ZioneyBajalan/ePortfolio.git
 cd ePortfolio
 ```
+2. View locally (no build required):
+```bash
+# On Windows
+start index.html
+```
+3. Optional (local dev with Vite):
+```bash
+npm install
+npm run dev
+```
 
-3. Open `index.html` in your web browser to view the site locally.
+## Deploy
+- GitHub Pages (static): push the repository to GitHub and enable Pages from the `main` branch (or use `gh-pages`). Since this is a static site, no build step is required unless you use Vite.
+- Vercel: connect the repository; for a Vite site set the build command to `npm run build` and the output directory to `dist`. Vercel auto-detects and provides sensible defaults.
 
-4. To deploy to GitHub Pages:
-   - Go to your repository settings
-   - Scroll down to the GitHub Pages section
-   - Select the main branch as the source
-   - Save the changes
-
-## Project Structure
-
+## Minimal project structure
 ```
 ePortfolio/
 ├── index.html
 ├── css/
-│   └── styles.css
+│   └── style.css
 ├── js/
 │   └── main.js
-├── images
+├── images/   (project images & resume)
+├── package.json  (optional dev tooling)
 └── README.md
 ```
 
-## Customization
-
-1. Replace the profile photo in the `images` folder
-2. Update the content in `index.html`
-3. Modify styles in `styles.css`
-4. Add your own projects to the projects section
-5. Update the contact form with your Formspree endpoint
-
-## Contributing
-
-1. Fork the repository
-2. Create a new branch
-3. Make your changes
-4. Submit a pull request
-
-## License
-
-This project is open source and available under the MIT License.
+## Contact
+- Email: jayce.zioney@gmail.com

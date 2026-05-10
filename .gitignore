@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.DS_Store
+*.log
+pixel-nature.gif.gif
+vine-asset-top-left.png.png
+vine-asset-bottom-right.png.png

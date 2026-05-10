@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Simple planet with nebula overlay (lightweight SVG) -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" preserveAspectRatio="xMidYMid meet">
+  <defs>
+    <radialGradient id="planetGrad" cx="35%" cy="30%" r="70%">
+      <stop offset="0%" stop-color="#9EEBFF" stop-opacity="0.95"/>
+      <stop offset="50%" stop-color="#6AE3FF" stop-opacity="0.7"/>
+      <stop offset="100%" stop-color="#2A2B6F" stop-opacity="0.9"/>
+    </radialGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+  </defs>
+
+  <g filter="url(#softGlow)">
+    <circle cx="200" cy="200" r="160" fill="url(#planetGrad)" />
+  </g>
+
+  <g opacity="0.16" fill="#7B61FF">
+    <ellipse cx="420" cy="120" rx="260" ry="60" />
+    <ellipse cx="520" cy="360" rx="200" ry="40" />
+  </g>
+
+  <g fill="#fff" opacity="0.9">
+    <circle cx="80" cy="40" r="1.8" />
+    <circle cx="120" cy="80" r="1" />
+    <circle cx="60" cy="200" r="1.2" />
+  </g>
+</svg>
